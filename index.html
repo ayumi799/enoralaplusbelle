@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PulseGrowth — Email Marketing & Google Ads</title>
+  <meta name="description" content="Campagnes email qui convertissent + Google Ads rentable. Audit gratuit en 15 minutes.">
+  <meta name="theme-color" content="#0b0f19" />
+
+  <style>
+    :root{
+      --bg:#070a12;
+      --bg2:#0b0f19;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.09);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.66);
+      --line:rgba(255,255,255,.10);
+      --brand1:#7c3aed; /* violet */
+      --brand2:#06b6d4; /* cyan */
+      --brand3:#22c55e; /* green accent */
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:26px;
+      --max:1120px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+    [data-theme="light"]{
+      --bg:#f7f8fb;
+      --bg2:#ffffff;
+      --card:rgba(10,15,25,.06);
+      --card2:rgba(10,15,25,.09);
+      --text:rgba(10,15,25,.92);
+      --muted:rgba(10,15,25,.64);
+      --line:rgba(10,15,25,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.20), transparent 60%),
+        radial-gradient(900px 650px at 80% 20%, rgba(6,182,212,.18), transparent 60%),
+        radial-gradient(900px 650px at 55% 90%, rgba(34,197,94,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.10));
+      border-bottom:1px solid var(--line);
+    }
+    [data-theme="light"] .nav{
+      background: linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.55));
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height:72px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(12px 12px at 25% 30%, rgba(255,255,255,.85), transparent 60%),
+        linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 10px 30px rgba(124,58,237,.25);
+      position:relative;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:7px;
+      border-radius:10px;
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .nav-links{
+      display:flex; align-items:center; gap:18px;
+      font-weight:600;
+      color:var(--muted);
+    }
+    .nav-links a{padding:10px 8px; border-radius:12px}
+    .nav-links a:hover{color:var(--text); background:var(--card)}
+    .nav-cta{display:flex; align-items:center; gap:10px}
+    .btn{
+      border:1px solid var(--line);
+      background:var(--card);
+      color:var(--text);
+      padding:11px 14px;
+      border-radius:14px;
+      font-weight:700;
+      cursor:pointer;
+      transition: transform .15s var(--ease), background .15s var(--ease), border-color .15s var(--ease);
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background:var(--card2); border-color:rgba(255,255,255,.18)}
+    [data-theme="light"] .btn:hover{border-color:rgba(10,15,25,.18)}
+    .btn.primary{
+      border:0;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 18px 55px rgba(124,58,237,.22);
+    }
+    .btn.primary:hover{transform: translateY(-2px) scale(1.01)}
+    .btn.icon{padding:11px 12px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:999px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+    }
+    .hero{
+      padding:64px 0 26px;
+      position:relative;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:24px;
+      align-items:stretch;
+    }
+    .h1{
+      font-size: clamp(34px, 4.2vw, 56px);
+      line-height:1.02;
+      margin:14px 0 10px;
+      letter-spacing:-.8px;
+    }
+    .sub{
+      font-size: clamp(16px, 1.6vw, 18px);
+      color:var(--muted);
+      max-width: 56ch;
+      line-height:1.6;
+    }
+    .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:10px;
+      margin-top:22px;
+      max-width: 520px;
+    }
+    .kpi{
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, var(--card), rgba(255,255,255,.03));
+    }
+    .kpi b{font-size:18px}
+    .kpi span{display:block; color:var(--muted); font-weight:650; margin-top:2px; font-size:13px}
+
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.02));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+    }
+    .hero-card{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      position:relative;
+      overflow:hidden;
+      min-height: 360px;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-60px -60px auto auto;
+      width:240px; height:240px;
+      background: radial-gradient(circle at 30% 30%, rgba(6,182,212,.35), transparent 60%);
+      filter: blur(2px);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+    .mini{
+      display:flex; align-items:flex-start; gap:12px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .icon{
+      width:42px; height:42px;
+      border-radius:14px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(124,58,237,.28), rgba(6,182,212,.18));
+      border:1px solid rgba(255,255,255,.14);
+      flex:0 0 auto;
+    }
+    [data-theme="light"] .icon{border-color:rgba(10,15,25,.14)}
+    .mini h3{margin:0; font-size:15px}
+    .mini p{margin:5px 0 0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.5}
+
+    .section{padding:52px 0}
+    .section h2{
+      margin:0 0 10px;
+      font-size: clamp(24px, 2.4vw, 34px);
+      letter-spacing:-.4px;
+    }
+    .section p.lead{margin:0 0 20px; color:var(--muted); max-width:70ch; line-height:1.6; font-weight:650}
+    .grid-3{
+      display:grid; grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .grid-2{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    .service{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+      transition: transform .18s var(--ease);
+    }
+    .service:hover{transform: translateY(-2px)}
+    .service .top{display:flex; gap:12px; align-items:flex-start}
+    .service h3{margin:0; font-size:16px}
+    .service p{margin:8px 0 0; color:var(--muted); font-weight:650; font-size:13px; line-height:1.55}
+    .bullets{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:8px}
+    .bullets li{
+      display:flex; gap:10px; align-items:flex-start;
+      color:var(--muted);
+      font-weight:650;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .tick{
+      width:18px; height:18px; border-radius:6px;
+      background: rgba(34,197,94,.16);
+      border:1px solid rgba(34,197,94,.28);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    .proof{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.02));
+      overflow:hidden;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    .quote{
+      margin:0;
+      font-size:14px;
+      line-height:1.6;
+      color:rgba(255,255,255,.86);
+    }
+    [data-theme="light"] .quote{color:rgba(10,15,25,.86)}
+    .who{margin-top:12px; display:flex; align-items:center; gap:10px}
+    .avatar{
+      width:38px; height:38px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(124,58,237,.35), rgba(6,182,212,.22));
+      border:1px solid var(--line);
+    }
+    .who b{display:block; font-size:13px}
+    .who span{display:block; color:var(--muted); font-weight:700; font-size:12px; margin-top:2px}
+
+    .pricing{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+      align-items:stretch;
+    }
+    .plan{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .plan.popular{
+      border:1px solid rgba(124,58,237,.42);
+      box-shadow: 0 22px 70px rgba(124,58,237,.16);
+    }
+    .plan h3{margin:0; font-size:16px}
+    .price{
+      font-size:32px; font-weight:900; letter-spacing:-.8px;
+      margin:2px 0 0;
+    }
+    .price small{font-size:12px; color:var(--muted); font-weight:800}
+    .plan .desc{color:var(--muted); font-weight:650; font-size:13px; line-height:1.55; margin:0}
+    .plan .btn{width:100%; justify-content:center}
+    .sep{height:1px; background:var(--line); margin:6px 0}
+
+    .faq{
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      overflow:hidden;
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.02));
+    }
+    details{border-top:1px solid var(--line)}
+    details:first-child{border-top:0}
+    summary{
+      cursor:pointer;
+      list-style:none;
+      padding:16px 18px;
+      font-weight:850;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .faq p{
+      margin:0;
+      padding:0 18px 16px;
+      color:var(--muted);
+      font-weight:650;
+      line-height:1.6;
+      font-size:13.5px;
+    }
+    .plus{
+      width:34px; height:34px; border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      flex:0 0 auto;
+      transition: transform .18s var(--ease);
+    }
+    details[open] .plus{transform: rotate(45deg)}
+
+    .contact{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
+      align-items:start;
+    }
+    form{
+      padding:18px;
+      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.02));
+    }
+    label{display:block; font-size:12px; font-weight:800; color:var(--muted); margin:10px 0 6px}
+    input, textarea, select{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      padding:12px 12px;
+      color:var(--text);
+      outline:none;
+      font-weight:650;
+      transition:border-color .15s var(--ease), transform .15s var(--ease);
+    }
+    [data-theme="light"] input, [data-theme="light"] textarea, [data-theme="light"] select{
+      background: rgba(10,15,25,.03);
+    }
+    input:focus, textarea:focus, select:focus{border-color:rgba(124,58,237,.45)}
+    textarea{min-height:120px; resize:vertical}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .hint{margin-top:10px; color:var(--muted); font-weight:650; font-size:12px; line-height:1.55}
+    .toast{
+      position:fixed;
+      right:18px; bottom:18px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+      color:var(--text);
+      box-shadow: var(--shadow);
+      opacity:0; transform: translateY(10px);
+      pointer-events:none;
+      transition: opacity .18s var(--ease), transform .18s var(--ease);
+      max-width: 320px;
+      font-weight:750;
+      z-index:999;
+    }
+    [data-theme="light"] .toast{background: rgba(255,255,255,.85)}
+    .toast.show{opacity:1; transform: translateY(0)}
+
+    footer{
+      padding:26px 0 40px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-weight:650;
+      font-size:13px;
+    }
+    .footer-grid{
+      display:flex; gap:16px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+    }
+    .small-links{display:flex; gap:14px; flex-wrap:wrap}
+    .small-links a{color:var(--muted)}
+    .small-links a:hover{color:var(--text)}
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero-grid{grid-template-columns: 1fr; }
+      .hero-card{min-height:auto}
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      .contact{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .kpis{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 520px){
+      .kpis{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+    }
+
+    /* Subtle animations */
+    .reveal{opacity:0; transform: translateY(10px); transition: opacity .6s var(--ease), transform .6s var(--ease)}
+    .reveal.in{opacity:1; transform: translateY(0)}
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="PulseGrowth">
+        <span class="logo" aria-hidden="true"></span>
+        <span>PulseGrowth</span>
+      </a>
+
+      <div class="nav-links" aria-label="Navigation">
+        <a href="#services">Services</a>
+        <a href="newsletter.html">Portfolio</a>
+        <a href="#method">Méthode</a>
+        <a href="#proof">Résultats</a>
+        <a href="#pricing">Offres</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div class="nav-cta">
+        <button class="btn icon" id="themeBtn" title="Changer de thème" aria-label="Changer de thème">
+          <span aria-hidden="true">🌓</span>
+        </button>
+        <a class="btn primary" href="#contact">
+          <span aria-hidden="true">⚡</span> Audit gratuit
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <span class="chip">📩 Email marketing + 🎯 Google Ads — orienté conversion</span>
+          <h1 class="h1">
+            Vends plus. <span style="background:linear-gradient(135deg,var(--brand1),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent;">Sans cramer ton budget.</span>
+          </h1>
+          <p class="sub">
+            On construit des campagnes email qui génèrent du chiffre + des Google Ads qui s’auto-financent.
+            Tracking propre, messages percutants, pages qui convertissent.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">📞 Réserver un audit gratuit</a>
+            <a class="btn" href="#pricing">Voir les offres</a>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi">
+              <b>+25% à +120%</b><span>hausse moyenne du CA email*</span>
+            </div>
+            <div class="kpi">
+              <b>ROAS x2+</b><span>objectif Ads dès 30 jours*</span>
+            </div>
+            <div class="kpi">
+              <b>Tracking clean</b><span>GA4 + Tag Manager</span>
+            </div>
+          </div>
+          <p class="hint" style="margin-top:10px">*Exemples indicatifs : dépend du secteur, de l’offre et du trafic.</p>
+        </div>
+
+        <aside class="card hero-card reveal">
+          <div class="mini">
+            <div class="icon" aria-hidden="true">🎯</div>
+            <div>
+              <h3>Google Ads qui sert ton business</h3>
+              <p>Structure de compte, mots-clés, annonces, extensions, pages, suivi des conversions. Objectif : rentabilité.</p>
+            </div>
+          </div>
+
+          <div class="mini">
+            <div class="icon" aria-hidden="true">📩</div>
+            <div>
+              <h3>Email qui convertit (pas qui spam)</h3>
+              <p>Flows automatisés, newsletters, segmentation, copywriting, délivrabilité. Plus de ventes, moins de désabonnements.</p>
+            </div>
+          </div>
+
+          <div class="mini">
+            <div class="icon" aria-hidden="true">📊</div>
+            <div>
+              <h3>Mesure & itération</h3>
+              <p>Dashboard clair, tests A/B, optimisation continue. Tu vois ce qui marche, et pourquoi.</p>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+          <a class="btn primary" href="#contact">🚀 Je veux des leads maintenant</a>
+          <p class="hint">Réponse sous 24–48h. Pas de blabla : on va droit au plan d’action.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="container">
+        <h2 class="reveal">Ce qu’on fait (et ce qui rapporte)</h2>
+        <p class="lead reveal">
+          Deux leviers complémentaires : <b>Email</b> pour monétiser ton audience, <b>Google Ads</b> pour acheter du trafic qualifié.
+          On connecte les deux pour maximiser le ROI.
+        </p>
+
+        <div class="grid-3">
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">🧠</div>
+              <div>
+                <h3>Stratégie & offre</h3>
+                <p>Positionnement, angles, promesses, structure de landing. On rend ton offre “évidente”.</p>
+              </div>
+            </div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> Audit funnel + quick wins</li>
+              <li><span class="tick">✓</span> Roadmap 30/60/90 jours</li>
+              <li><span class="tick">✓</span> Messages qui vendent</li>
+            </ul>
+          </div>
+
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">📩</div>
+              <div>
+                <h3>Email marketing</h3>
+                <p>Automations & newsletters : bienvenue, abandon panier, post-achat, réactivation.</p>
+              </div>
+            </div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> Segmentation & personnalisation</li>
+              <li><span class="tick">✓</span> Délivrabilité (SPF/DKIM/DMARC)</li>
+              <li><span class="tick">✓</span> A/B tests (objet, offre, CTA)</li>
+            </ul>
+          </div>
+
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">🎯</div>
+              <div>
+                <h3>Google Ads</h3>
+                <p>Search / Performance Max / Remarketing. On coupe le gaspillage, on scale ce qui marche.</p>
+              </div>
+            </div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> Structure (campagnes, groupes, mots-clés)</li>
+              <li><span class="tick">✓</span> Tracking conversions (GA4, GTM)</li>
+              <li><span class="tick">✓</span> Optimisation ROAS / CPA</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHOD -->
+    <section class="section" id="method">
+      <div class="container">
+        <h2 class="reveal">Notre méthode en 4 étapes</h2>
+        <p class="lead reveal">Simple, rapide, orientée résultats. Tu sais exactement ce qui est fait chaque semaine.</p>
+
+        <div class="grid-2">
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">1️⃣</div>
+              <div>
+                <h3>Audit</h3>
+                <p>Analyse compte Ads, tracking, emails, pages, offre et concurrents. On sort les 10 priorités.</p>
+              </div>
+            </div>
+          </div>
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">2️⃣</div>
+              <div>
+                <h3>Mise en place</h3>
+                <p>Tracking, structure Ads, flows email, templates, pages. Base solide avant de pousser.</p>
+              </div>
+            </div>
+          </div>
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">3️⃣</div>
+              <div>
+                <h3>Optimisation</h3>
+                <p>Tests A/B, négatifs, annonces, audiences, segmentation, cadence newsletter. On gagne au détail.</p>
+              </div>
+            </div>
+          </div>
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">4️⃣</div>
+              <div>
+                <h3>Scale</h3>
+                <p>Quand c’est rentable : on augmente budget & volume, sans flinguer le CPA.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF -->
+    <section class="section" id="proof">
+      <div class="container">
+        <h2 class="reveal">Preuves & retours clients</h2>
+        <p class="lead reveal">Le but : des métriques qui montent. Voici le type de feedback qu’on vise.</p>
+
+        <div class="grid-3">
+          <div class="proof reveal">
+            <span class="badge">📩 Email — Automations</span>
+            <p class="quote">“En 3 semaines, nos flows (welcome + abandon panier) sont devenus notre 1er canal de ventes hors Ads.”</p>
+            <div class="who">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <b>Camille • E-commerce</b>
+                <span>Flows + segmentation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof reveal">
+            <span class="badge">🎯 Google Ads — Search</span>
+            <p class="quote">“On a enfin stoppé la fuite : CPA divisé par 1,8 et meilleure qualité de lead.”</p>
+            <div class="who">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <b>Yanis • Services</b>
+                <span>Restructuration + tracking</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof reveal">
+            <span class="badge">📊 Full-funnel</span>
+            <p class="quote">“Le combo Ads → email a changé le game : plus de repeat, panier moyen en hausse.”</p>
+            <div class="who">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <b>Sara • Retail</b>
+                <span>Ads + CRM + offers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <h2 class="reveal">Offres claires, sans piège</h2>
+        <p class="lead reveal">
+          Tu choisis selon ton stade. Tu peux démarrer petit et upgrader quand ça tourne.
+        </p>
+
+        <div class="pricing">
+          <div class="plan reveal">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+              <h3>Starter</h3>
+              <span class="chip">Pour lancer</span>
+            </div>
+            <div class="price">490€ <small>/mois</small></div>
+            <p class="desc">Idéal pour valider un canal (Email OU Ads) avec une base propre + premiers résultats.</p>
+            <div class="sep"></div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> Audit + plan d’action</li>
+              <li><span class="tick">✓</span> 1 levier : Email <i>ou</i> Ads</li>
+              <li><span class="tick">✓</span> 2 optimisations / semaine</li>
+              <li><span class="tick">✓</span> Reporting mensuel</li>
+            </ul>
+            <a class="btn" href="#contact">Choisir Starter</a>
+          </div>
+
+          <div class="plan popular reveal">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+              <h3>Growth</h3>
+              <span class="chip">🔥 Le + choisi</span>
+            </div>
+            <div class="price">990€ <small>/mois</small></div>
+            <p class="desc">Le combo gagnant : Ads + Email, tracking solide, tests A/B, optimisation continue.</p>
+            <div class="sep"></div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> Email : 3 flows + 2 newsletters/mois</li>
+              <li><span class="tick">✓</span> Ads : optimisation + nouvelles annonces</li>
+              <li><span class="tick">✓</span> Tracking conversions (GA4/GTM)</li>
+              <li><span class="tick">✓</span> Call hebdo 20 min</li>
+            </ul>
+            <a class="btn primary" href="#contact">Je veux Growth</a>
+          </div>
+
+          <div class="plan reveal">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+              <h3>Scale</h3>
+              <span class="chip">Pour accélérer</span>
+            </div>
+            <div class="price">1 790€ <small>/mois</small></div>
+            <p class="desc">Pour scaler : plus de tests, plus de créas, landing pages, segmentation avancée.</p>
+            <div class="sep"></div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> Email : flows + segmentation + A/B</li>
+              <li><span class="tick">✓</span> Ads : structure + scaling budget</li>
+              <li><span class="tick">✓</span> Optimisations illimitées (raisonnables)</li>
+              <li><span class="tick">✓</span> Dashboard + suivi weekly</li>
+            </ul>
+            <a class="btn" href="#contact">Discuter Scale</a>
+          </div>
+        </div>
+
+        <p class="hint reveal" style="margin-top:14px">
+          Les budgets Ads (Google) ne sont pas inclus : tu paies Google directement. On gère la stratégie + l’optimisation.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="reveal">FAQ</h2>
+        <p class="lead reveal">Réponses rapides aux questions qu’on nous pose tout le temps.</p>
+
+        <div class="faq reveal">
+          <details>
+            <summary>
+              En combien de temps je vois des résultats ?
+              <span class="plus" aria-hidden="true">+</span>
+            </summary>
+            <p>
+              Ads : souvent des signaux en 7–14 jours, puis optimisation 30 jours. Email : les flows peuvent performer dès la mise en place (welcome/abandon panier).
+              Ça dépend surtout du trafic, de l’offre et du tracking.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              Vous faites aussi les landing pages ?
+              <span class="plus" aria-hidden="true">+</span>
+            </summary>
+            <p>
+              Oui : soit optimisation de l’existant, soit création (structure, copy, sections clés, preuves, CTA). L’objectif : augmenter le taux de conversion, pas juste “faire joli”.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              Et la conformité / RGPD pour l’email ?
+              <span class="plus" aria-hidden="true">+</span>
+            </summary>
+            <p>
+              On met les bonnes pratiques (opt-in, préférences, lien de désinscription, mentions). Pour l’aspect juridique exact, on te conseille de valider avec ton conseil/avocat si besoin.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              Vous travaillez pour quels secteurs ?
+              <span class="plus" aria-hidden="true">+</span>
+            </summary>
+            <p>
+              E-commerce, services, lead gen, formations… Si ton offre a une vraie valeur et une marge correcte, on peut presque toujours trouver un angle rentable.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <h2 class="reveal">Audit gratuit — on regarde ton setup</h2>
+        <p class="lead reveal">
+          Tu remplis le formulaire, on te répond avec un mini diagnostic + une proposition claire (sans forcing).
+        </p>
+
+        <div class="contact">
+          <form class="reveal" id="leadForm">
+            <div class="row">
+              <div>
+                <label for="name">Nom</label>
+                <input id="name" name="name" placeholder="Ton nom" required />
+              </div>
+              <div>
+                <label for="email">Email pro</label>
+                <input id="email" name="email" type="email" placeholder="toi@entreprise.com" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="website">Site / boutique</label>
+                <input id="website" name="website" placeholder="https://..." />
+              </div>
+              <div>
+                <label for="need">Besoin</label>
+                <select id="need" name="need" required>
+                  <option value="" disabled selected>Choisir…</option>
+                  <option>Email marketing</option>
+                  <option>Google Ads</option>
+                  <option>Email + Google Ads</option>
+                  <option>Audit tracking</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="msg">Ton objectif (CA, leads, ROAS, CPA…)</label>
+            <textarea id="msg" name="msg" placeholder="Ex : passer de 30 à 60 leads/mois, CPA max 20€, ou ROAS 4x…" required></textarea>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+              <button class="btn primary" type="submit">📨 Envoyer</button>
+              <a class="btn" href="#pricing">Voir les offres</a>
+            </div>
+
+            <p class="hint">
+              Ce formulaire n’envoie pas de mail automatiquement (demo). Je peux te brancher ça sur Formspree / Zapier / ton backend si tu veux.
+            </p>
+          </form>
+
+          <div class="service reveal">
+            <div class="top">
+              <div class="icon" aria-hidden="true">✅</div>
+              <div>
+                <h3>Ce que tu reçois après l’audit</h3>
+                <p>Un plan clair, chiffré, et priorisé. Et surtout : quoi faire d’abord.</p>
+              </div>
+            </div>
+            <ul class="bullets">
+              <li><span class="tick">✓</span> 5–10 quick wins actionnables</li>
+              <li><span class="tick">✓</span> Recos Ads (structure, mots-clés, annonces)</li>
+              <li><span class="tick">✓</span> Recos Email (flows à poser en priorité)</li>
+              <li><span class="tick">✓</span> Conseils landing & tracking</li>
+            </ul>
+
+            <div class="sep"></div>
+
+            <div class="mini">
+              <div class="icon" aria-hidden="true">⚡</div>
+              <div>
+                <h3>Tu veux le mode “agressif” ?</h3>
+                <p>On peut aussi faire une refonte complète du funnel : Ads → landing → email → upsell.</p>
+              </div>
+            </div>
+
+            <p class="hint" style="margin:12px 0 0">
+              Contact direct : <b>hello@pulsegrowth.fr</b> (à remplacer) • <b>+33 6 00 00 00 00</b> (à remplacer)
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+
+      <div class="container footer-grid">
+        <div style="display:flex; align-items:center; gap:10px">
+          <span class="logo" aria-hidden="true" style="width:30px;height:30px;border-radius:12px"></span>
+          <div>
+            <b style="color:var(--text)">PulseGrowth</b><br/>
+            <span>© <span id="year"></span> — Email & Google Ads</span>
+          </div>
+        </div>
+        <div class="small-links">
+          <a href="#services">Services</a>
+          <a href="#pricing">Offres</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast">Message envoyé ✅ (demo)</div>
+
+  <script>
+    // Theme toggle (persist in localStorage)
+    const themeBtn = document.getElementById('themeBtn');
+    const stored = localStorage.getItem('theme');
+    if(stored) document.documentElement.setAttribute('data-theme', stored);
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toast(next === 'light' ? 'Mode clair activé' : 'Mode sombre activé');
+    });
+
+    // Reveal on scroll
+    const items = [...document.querySelectorAll('.reveal')];
+    const io = new IntersectionObserver((entries)=>{
+      for(const e of entries){
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }
+    }, {threshold:.12});
+    items.forEach(i=>io.observe(i));
+
+    // Fake form submit (demo)
+    const form = document.getElementById('leadForm');
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      // basic validation
+      if(!data.name || !data.email || !data.need || !data.msg){
+        toast("Remplis les champs obligatoires 🙏");
+        return;
+      }
+
+      // In real life: send to your backend / Formspree / Zapier / Make
+      console.log("Lead:", data);
+
+      form.reset();
+      toast("Message envoyé ✅ (demo)");
+    });
+
+    // Toast helper
+    const toastEl = document.getElementById('toast');
+    let t;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(t);
+      t = setTimeout(()=> toastEl.classList.remove('show'), 2600);
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth anchor scroll (native-ish)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === "#") return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
+</body>
+</html>
